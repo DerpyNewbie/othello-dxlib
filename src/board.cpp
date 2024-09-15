@@ -3,6 +3,7 @@
 //
 
 #include <DxLib.h>
+#include "stone.h"
 #include "board.h"
 
 Board::Board() {
@@ -10,22 +11,23 @@ Board::Board() {
         stone = new Stone;
     }
 
-    setStoneType(3, 3, Stone::kBlack);
-    setStoneType(4, 3, Stone::kWhite);
-    setStoneType(3, 4, Stone::kWhite);
-    setStoneType(4, 4, Stone::kBlack);
+    setStoneType(3, 3, StoneType::kBlack);
+    setStoneType(4, 3, StoneType::kWhite);
+    setStoneType(3, 4, StoneType::kWhite);
+    setStoneType(4, 4, StoneType::kBlack);
 }
 
 void Board::draw() const {
     int screen_x, screen_y;
+    const int stone_radius_doubled = kStoneRadius * 2;
     GetDrawScreenSize(&screen_x, &screen_y);
-    int x_offset = (screen_x / 2) - (kStoneRadius * 2) * (kWidth / 2);
-    int y_offset = (screen_y / 2) - (kStoneRadius * 2) * (kHeight / 2);
+    int x_offset = (screen_x / 2) - stone_radius_doubled * (kWidth / 2);
+    int y_offset = (screen_y / 2) - stone_radius_doubled * (kHeight / 2);
 
     for (int y = 0; y < kHeight; y++) {
         for (int x = 0; x < kWidth; x++) {
             auto stone = getStone(x, y);
-            stone->draw(x * kStoneRadius * 2 + x_offset, y * kStoneRadius * 2 + y_offset);
+            stone->draw(x * stone_radius_doubled + x_offset, y * stone_radius_doubled + y_offset);
         }
     }
 }
@@ -34,15 +36,15 @@ Stone *Board::getStone(int x, int y) const {
     return stones_[x + (kWidth * y)];
 }
 
-Stone::StoneType Board::getStoneType(int x, int y) const {
+StoneType Board::getStoneType(int x, int y) const {
     return getStone(x, y)->getType();
 }
 
-void Board::setStoneType(int x, int y, Stone::StoneType type) const {
+void Board::setStoneType(int x, int y, StoneType type) const {
     getStone(x, y)->setType(type);
 }
 
-int Board::updatePlaceableState(Stone::StoneType type) {
+int Board::updatePlaceableState(StoneType type) {
     int result = 0;
     for (int y = 0; y < kHeight; y++) {
         for (int x = 0; x < kWidth; x++) {
@@ -55,15 +57,15 @@ int Board::updatePlaceableState(Stone::StoneType type) {
     return result;
 }
 
-bool Board::canPlace(int x, int y, Stone::StoneType type) {
-    if (getStoneType(x, y) != Stone::StoneType::kEmpty) {
+bool Board::canPlace(int x, int y, StoneType type) {
+    if (getStoneType(x, y) != StoneType::kEmpty) {
         return false;
     }
 
     return !getFlippableStones(x, y, type).empty();
 }
 
-void Board::place(int x, int y, Stone::StoneType type) {
+void Board::place(int x, int y, StoneType type) {
     getStone(x, y)->setType(type);
 
     auto flippable_stones = getFlippableStones(x, y, type);
@@ -72,7 +74,7 @@ void Board::place(int x, int y, Stone::StoneType type) {
     }
 }
 
-std::vector<Stone *> Board::getFlippableStones(int x, int y, Stone::StoneType type) const {
+std::vector<Stone *> Board::getFlippableStones(int x, int y, StoneType type) const {
     std::vector<Stone *> result;
     for (int dy = -1; dy <= 1; dy++) {
         for (int dx = -1; dx <= 1; dx++) {
@@ -81,7 +83,7 @@ std::vector<Stone *> Board::getFlippableStones(int x, int y, Stone::StoneType ty
             bool can_flip = false;
             while (0 <= cx && 0 <= cy && cx < kWidth && cy < kHeight) {
                 auto checking_stone = getStoneType(cx, cy);
-                if (checking_stone == Stone::StoneType::kEmpty) {
+                if (checking_stone == StoneType::kEmpty) {
                     break;
                 }
 
@@ -126,13 +128,13 @@ void Board::getScores(int &black, int &white) const {
     white = 0;
     for (auto stone: stones_) {
         switch (stone->getType()) {
-            case Stone::kBlack:
+            case StoneType::kBlack:
                 black++;
                 break;
-            case Stone::kWhite:
+            case StoneType::kWhite:
                 white++;
                 break;
-            case Stone::kEmpty:
+            case StoneType::kEmpty:
                 break;
         }
     }
@@ -146,6 +148,6 @@ std::vector<Point *> Board::getPlaceablePoints() const {
                 result.push_back(new Point{x, y});
         }
     }
-    
+
     return result;
 }

@@ -22,6 +22,7 @@ add_executable(othello ${GAME_SRC}
         src/othello_ai.h
         src/othello_player.cpp
         src/othello_player.h
+        src/stone_type.h
 )
 
 add_custom_command(

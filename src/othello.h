@@ -13,7 +13,7 @@
 class Othello {
 private:
     Board *board_ = new Board();
-    Stone::StoneType current_type_ = Stone::StoneType::kBlack;
+    StoneType current_type_ = StoneType::kBlack;
     OthelloPlayer* player_black_;
     OthelloPlayer* player_white_;
     OthelloPlayer* current_player_;

@@ -14,7 +14,7 @@ private:
 
     bool has_placeable_cached = false;
     Board* board_;
-    Stone::StoneType type_;
+    StoneType type_;
     std::vector<Point*> placeable_points_ = {};
     std::map<Point*, int> placement_score_ = {};
     int current_search_path_ = 0;
@@ -22,7 +22,7 @@ private:
     int last_searched_time_ = {};
 
 public:
-    OthelloAIPlayer(Board* board, Stone::StoneType type);
+    OthelloAIPlayer(Board* board, StoneType type);
 
     bool hasNextPlacement() override;
 

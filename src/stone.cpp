@@ -5,7 +5,7 @@
 #include <DxLib.h>
 #include "stone.h"
 
-Stone::StoneType Stone::getType() const {
+StoneType Stone::getType() const {
     return type_;
 }
 

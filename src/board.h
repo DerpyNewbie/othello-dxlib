@@ -6,16 +6,18 @@
 #define OTHELLO_BOARD_H
 
 #include <vector>
-#include "stone.h"
+#include "stone_type.h"
 
 struct Point {
     int x, y;
 };
 
+class Stone;
+
 class Board {
 public:
-    constexpr static int kWidth = 8;
-    constexpr static int kHeight = 8;
+    const static int kWidth = 8;
+    const static int kHeight = 8;
 
 private:
     int highlighted_x_ = 0;
@@ -26,17 +28,17 @@ private:
 public:
     Board();
 
-    bool canPlace(int x, int y, Stone::StoneType type);
+    bool canPlace(int x, int y, StoneType type);
 
-    void place(int x, int y, Stone::StoneType type);
+    void place(int x, int y, StoneType type);
 
-    std::vector<Stone *> getFlippableStones(int x, int y, Stone::StoneType type) const;
+    std::vector<Stone *> getFlippableStones(int x, int y, StoneType type) const;
 
     Stone *getStone(int x, int y) const;
 
-    Stone::StoneType getStoneType(int x, int y) const;
+    StoneType getStoneType(int x, int y) const;
 
-    void setStoneType(int x, int y, Stone::StoneType type) const;
+    void setStoneType(int x, int y, StoneType type) const;
 
     void setCursor(int x, int y);
 
@@ -44,9 +46,9 @@ public:
 
     void getScores(int &black, int &white) const;
 
-    int updatePlaceableState(Stone::StoneType type);
+    int updatePlaceableState(StoneType type);
 
-    std::vector<Point*> getPlaceablePoints() const;
+    std::vector<Point *> getPlaceablePoints() const;
 
     void draw() const;
 

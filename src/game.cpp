@@ -18,7 +18,7 @@ void Game::update() {
             if (g_inputs->getKeyDown(KEY_INPUT_SPACE)) {
                 delete othello_;
                 auto board = new Board();
-                othello_ = new Othello(board, new OthelloPlayer(), new OthelloAIPlayer(board, Stone::kWhite));
+                othello_ = new Othello(board, new OthelloPlayer(), new OthelloAIPlayer(board, StoneType::kWhite));
                 current_state_ = kInGame;
             }
 

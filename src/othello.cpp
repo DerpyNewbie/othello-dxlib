@@ -49,6 +49,6 @@ void Othello::getScores(int &black, int &white) {
 }
 
 void Othello::flipTurn() {
-    current_type_ = current_type_ == Stone::StoneType::kBlack ? Stone::StoneType::kWhite : Stone::StoneType::kBlack;
-    current_player_ = current_type_ == Stone::kBlack ? player_black_: player_white_;
+    current_type_ = current_type_ == StoneType::kBlack ? StoneType::kWhite : StoneType::kBlack;
+    current_player_ = current_type_ == kBlack ? player_black_: player_white_;
 }

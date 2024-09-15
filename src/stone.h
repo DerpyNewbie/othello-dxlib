@@ -5,21 +5,18 @@
 #ifndef OTHELLO_STONE_H
 #define OTHELLO_STONE_H
 
-constexpr static int kStoneRadius = 50;
+#include "stone_type.h"
+
+const static int kStoneRadius = 50;
 constexpr static unsigned int kStoneColors[3] = {
         0xFF444444, 0xFFFFFFFF, 0xFF000000
 };
-constexpr static unsigned int kCursorHighlightedColor = 0xFFFFFF00;
-constexpr static unsigned int kPlaceableHighlightedColor = 0xFF50AA50;
+const static unsigned int kCursorHighlightedColor = 0xFFFFFF00;
+const static unsigned int kPlaceableHighlightedColor = 0xFF50AA50;
+
 
 class Stone {
 public:
-    enum StoneType {
-        kEmpty = 0,
-        kWhite = 1,
-        kBlack = 2
-    };
-
     StoneType getType() const;
 
     void setType(StoneType type);

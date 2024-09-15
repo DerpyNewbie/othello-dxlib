@@ -30,6 +30,7 @@ bool OthelloAIPlayer::hasNextPlacement() {
     }
 
     if (GetNowCount() - search_begin_time_ < 1000) {
+        WaitTimer(GetNowCount() - search_begin_time_);
         return false;
     }
 
@@ -52,6 +53,8 @@ void OthelloAIPlayer::getNextPlacement(int &x, int &y) {
     x = max_point->x;
     y = max_point->y;
 
+    printf("decided at %d, %d which has maximum score of %d\n", x, y, max_score);
+
     has_placeable_cached = false;
 }
 
@@ -67,7 +70,7 @@ void OthelloAIPlayer::getCurrentCursor(int &x, int &y) {
     y = p->y;
 }
 
-OthelloAIPlayer::OthelloAIPlayer(Board *board, Stone::StoneType type) {
+OthelloAIPlayer::OthelloAIPlayer(Board *board, StoneType type) {
     board_ = board;
     type_ = type;
 }
