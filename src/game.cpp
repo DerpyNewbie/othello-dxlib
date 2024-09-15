@@ -9,19 +9,27 @@
 
 Game::Game() {
     current_state_ = kTitle;
+    title_ = new Title();
     othello_ = nullptr;
 }
 
 void Game::update() {
+    if (g_inputs->getKeyDown(KEY_INPUT_ESCAPE)) {
+        current_state_ = kExiting;
+        return;
+    }
+
     switch (current_state_) {
         case kTitle: {
-            if (g_inputs->getKeyDown(KEY_INPUT_SPACE)) {
-                delete othello_;
-                auto board = new Board();
-                othello_ = new Othello(board, new OthelloPlayer(), new OthelloAIPlayer(board, StoneType::kWhite));
+            title_->update();
+            if (title_->hasNewGame()) {
+                othello_ = title_->getNewGame();
                 current_state_ = kInGame;
             }
 
+            if (title_->shouldExit()) {
+                current_state_ = kExiting;
+            }
             break;
         }
         case kInGame: {
@@ -40,10 +48,12 @@ void Game::update() {
     }
 }
 
-void Game::draw() {
+void Game::draw() const {
     switch (current_state_) {
         case kTitle: {
-            DrawString(100, 100, "ぷれす すぺーす とぅ すたーと", 0xFFFFFFFF);
+//            DrawString(100, 100, "ぷれす すぺーす とぅ すたーと", 0xFFFFFFFF);
+
+            title_->draw();
             break;
         }
         case kInGame: {
@@ -52,8 +62,15 @@ void Game::draw() {
         }
         case kResult: {
             othello_->draw();
+            int black, white;
+            othello_->getScores(black, white);
             DrawString(100, 100, "げーむず えんど ぷれす すぺーす とぅ こんちにゅー", 0xFFFFFFFF);
+            DrawFormatString(100, 200, 0xFFFFFFFF, "くろ: %d, しろ: %d", black, white);
             break;
         }
     }
+}
+
+bool Game::isExiting() const {
+    return current_state_ == kExiting;
 }

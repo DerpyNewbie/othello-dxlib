@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 project(othello)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 file(GLOB GAME_SRC "src/*")
 
 include_directories(./dxlib)
@@ -23,6 +23,10 @@ add_executable(othello ${GAME_SRC}
         src/othello_player.cpp
         src/othello_player.h
         src/stone_type.h
+        src/title.cpp
+        src/title.h
+        src/highlightable_text.cpp
+        src/highlightable_text.h
 )
 
 add_custom_command(

@@ -6,15 +6,18 @@
 #define OTHELLO_GAME_H
 
 #include "othello.h"
+#include "title.h"
 
 class Game {
     enum GameState {
         kTitle,
         kInGame,
-        kResult
+        kResult,
+        kExiting
     };
 
     GameState current_state_;
+    Title *title_;
     Othello *othello_;
 
 public:
@@ -22,7 +25,9 @@ public:
 
     void update();
 
-    void draw();
+    void draw() const;
+
+    bool isExiting() const;
 };
 
 

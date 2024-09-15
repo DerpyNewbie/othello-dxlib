@@ -9,7 +9,7 @@
 #include "input_manager.h"
 #include "game.h"
 
-InputManager* g_inputs;
+InputManager *g_inputs;
 
 int WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     ChangeWindowMode(TRUE); // Windowed/Fullscreenの設定、Windowedにする
@@ -23,7 +23,7 @@ int WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
     g_inputs = new InputManager();
     auto game = new Game();
-    while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
+    while (ProcessMessage() == 0 && !game->isExiting()) {
         g_inputs->updateInputs();
         game->update();
         ClearDrawScreen();
