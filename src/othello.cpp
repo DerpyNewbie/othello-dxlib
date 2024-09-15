@@ -16,9 +16,6 @@ Othello::Othello(Board* board, OthelloPlayer *black_player, OthelloPlayer *white
 
 void Othello::update() {
     int x, y;
-    current_player_->getCurrentCursor(x, y);
-    board_->setCursor(x, y);
-
     if (current_player_->hasNextPlacement()) {
         current_player_->getNextPlacement(x, y);
         if (board_->canPlace(x, y, current_type_)) {
@@ -34,6 +31,9 @@ void Othello::update() {
             }
         }
     }
+
+    current_player_->getCurrentCursor(x, y);
+    board_->setCursor(x, y);
 }
 
 void Othello::draw() {

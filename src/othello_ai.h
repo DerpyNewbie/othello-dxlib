@@ -12,12 +12,14 @@
 class OthelloAIPlayer : public OthelloPlayer {
 private:
 
-    bool has_placeable_cached = false;
+    bool has_placeable_cached_ = false;
     Board* board_;
     StoneType type_;
     std::vector<Point*> placeable_points_ = {};
     std::map<Point*, int> placement_score_ = {};
-    int current_search_path_ = 0;
+    int current_search_path_ = {};
+    Point* current_highest_point_ = {};
+    int current_highest_score_ = {};
     int search_begin_time_ = {};
     int last_searched_time_ = {};
 
